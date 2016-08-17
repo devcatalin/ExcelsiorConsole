@@ -8,7 +8,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ExcelsiorConsole.Global;
-using ExcelsiorConsole.Users.Stunt3r;
 
 namespace ExcelsiorConsole
 {
