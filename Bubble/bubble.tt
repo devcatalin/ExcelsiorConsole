@@ -14,7 +14,7 @@ public static class CommandsGenerator {
 		<# text = text.Split(new char[] { '\r', '\n' }).Select(line => line == "" ? "" : "commands.Add(new ExcelsiorConsole.Users." + line.Split(':')[0] + "." + line.Split(':')[1] + "Cmd(cw));").ToList().Aggregate((a, b) => a + "\r\n\t\t" + b); #>
 
 		<#= text #>
-
+		
 		return commands;
 	}
 }
