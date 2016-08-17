@@ -54,10 +54,7 @@ namespace ExcelsiorConsole
             console.Dock = DockStyle.Fill;
             this.Controls.Add(console);
 
-            StopwatchCmd stopwatch = new StopwatchCmd(console);
-            console.Commands.Add(stopwatch);
-            ClearCmd clear = new ClearCmd(console);
-            console.Commands.Add(clear);
+            console.Commands.AddRange(CommandsGenerator.GetCommands(console));
         }
 
     }

@@ -13,22 +13,25 @@ namespace ExcelsiorConsole
         int _startingLinePosition = 0;
         int _commandPosition;
 
-        public string ConsoleName { get; } = "excelsior";
+        public string ConsoleName { get { return "excelsior"; } }
 
         public bool InExecution { get; set; }
         public string NameOfExecutingCommand { get; set; }
 
-        public Color ConsoleColor { get; set; } = Color.FromArgb(70, 131, 187);
+        public Color ConsoleColor { get; set; }
 
         public List<Command> Commands = new List<Command>();
 
-        public List<string> InputHistory { get; set; } = new List<string>();
+        public List<string> InputHistory { get; set; }
         private int _inputHistoryIterator;
 
         public event EventHandler<CommandEventArgs> RecievedCommand;
 
         public ConsoleWindow()
         {
+            ConsoleColor = Color.FromArgb(70, 131, 187);
+            InputHistory = new List<string>();;
+
             Font = new Font(new FontFamily("Consolas"), 20, FontStyle.Regular);
             BackColor = Color.Black;
             ForeColor = Color.FromArgb(45, 158, 187);
