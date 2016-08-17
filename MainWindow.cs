@@ -44,17 +44,17 @@ namespace ExcelsiorConsole
             base.WndProc(ref m);
         }
 
-        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
             UnregisterHotKey(this.Handle, this.GetType().GetHashCode());
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void MainWindow_Load(object sender, EventArgs e)
         {
             console.Dock = DockStyle.Fill;
             this.Controls.Add(console);
             console.Commands.Add(new ClearCmd(console));
-
+            console.Commands.Add(new CalculateCmd(console));
             console.Commands.AddRange(CommandsGenerator.GetCommands(console));
         }
 

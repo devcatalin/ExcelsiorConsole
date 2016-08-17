@@ -142,9 +142,9 @@ namespace ExcelsiorConsole
                             break;
                         }
 
-                        //string input = Text.Remove(0, _commandPosition);
-                        Select(_commandPosition, Text.Length);
-                        string input = SelectedText;
+                        string input = Text.Remove(0, _commandPosition);
+//                        Select(_commandPosition, Text.Length);
+//                        string input = SelectedText;
 
                         InputHistory.Add(input);
                         _inputHistoryIterator = InputHistory.Count;
@@ -171,7 +171,7 @@ namespace ExcelsiorConsole
                         }
                         else
                         {
-                            Command command = Commands.FirstOrDefault(c => c.CommandLabel == inputCommand.ToLower());
+                            Command command = Commands.FirstOrDefault(c => c.CommandLabel == inputCommand.ToLower() || c.Aliases.Contains(inputCommand.ToLower()));
                             if (command != null)
                             {
                                 command.Args = inputArgs;

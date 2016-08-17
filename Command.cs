@@ -10,6 +10,7 @@ namespace ExcelsiorConsole
     {
         public ConsoleWindow console { get; set; }
         public string CommandLabel { get; set; }
+        public List<string> Aliases { get; set; } = new List<string>();
         public string[] Args { get; set; }
 
         public string[] Dependencies { get; set; }     

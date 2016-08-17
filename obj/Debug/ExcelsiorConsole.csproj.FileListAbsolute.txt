@@ -27,3 +27,4 @@ C:\Users\484327\Documents\GitHub\ExcelsiorConsole\obj\Debug\ExcelsiorConsole.Pro
 C:\Users\484327\Documents\GitHub\ExcelsiorConsole\obj\Debug\ExcelsiorConsole.csproj.GenerateResource.Cache
 C:\Users\484327\Documents\GitHub\ExcelsiorConsole\bin\Debug\ExcelsiorConsole.exe
 C:\Users\484327\Documents\GitHub\ExcelsiorConsole\bin\Debug\ExcelsiorConsole.pdb
+C:\Users\Catalin\Documents\GitHub\ExcelsiorConsole\bin\Debug\mxparser.dll
