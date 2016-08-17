@@ -19,3 +19,4 @@ C:\Users\Catalin\Documents\GitHub\ExcelsiorConsole\obj\Debug\ExcelsiorConsole.cs
 C:\Users\Catalin\Documents\GitHub\ExcelsiorConsole\obj\Debug\ExcelsiorConsole.MainWindow.resources
 C:\Users\Catalin\Documents\GitHub\ExcelsiorConsole\obj\Debug\ExcelsiorConsole.Properties.Resources.resources
 C:\Users\Catalin\Documents\GitHub\ExcelsiorConsole\obj\Debug\ExcelsiorConsole.csproj.GenerateResource.Cache
+C:\Users\Catalin\Documents\GitHub\ExcelsiorConsole\bin\Debug\mxparser.dll

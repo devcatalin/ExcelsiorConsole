@@ -58,6 +58,8 @@ namespace ExcelsiorConsole
             console.Commands.Add(stopwatch);
             ClearCmd clear = new ClearCmd(console);
             console.Commands.Add(clear);
+            CalculateCmd calc = new CalculateCmd(console);
+            console.Commands.Add(calc);
         }
 
     }
