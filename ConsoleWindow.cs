@@ -23,7 +23,7 @@ namespace ExcelsiorConsole
         public List<Command> Commands = new List<Command>();
 
         public List<string> InputHistory { get; set; } = new List<string>();
-        private int historyIterator;
+        private int _inputHistoryIterator;
 
         public event EventHandler<CommandEventArgs> RecievedCommand;
 
@@ -144,7 +144,7 @@ namespace ExcelsiorConsole
                         string input = SelectedText;
 
                         InputHistory.Add(input);
-                        historyIterator = InputHistory.Count;
+                        _inputHistoryIterator = InputHistory.Count;
 
                         string[] inputParts = input.Split(' ');
                         string[] inputArgs = null;
@@ -194,32 +194,34 @@ namespace ExcelsiorConsole
                     }
                 case Keys.Up:
                 {
-                    historyIterator--;
-                    if (historyIterator >= 0)
+                    _inputHistoryIterator--;
+                    if (_inputHistoryIterator >= 0)
                     {
                         Select(_commandPosition, Text.Length);
                         SelectedText = string.Empty;
-                        AppendText(InputHistory[historyIterator]);
+                        AppendText(InputHistory[_inputHistoryIterator]);
                         e.Handled = true;
                     }
                     else
-                        historyIterator = 0;
+                        _inputHistoryIterator = 0;
 
                     e.Handled = true;
                     break;
                     }
                 case Keys.Down:
                     {
-                        historyIterator++;
-                        if (historyIterator < InputHistory.Count)
+                        _inputHistoryIterator++;
+                        
+                        Select(_commandPosition, Text.Length);
+                        SelectedText = string.Empty;
+
+                        if (_inputHistoryIterator < InputHistory.Count)
                         {
-                            Select(_commandPosition, Text.Length);
-                            SelectedText = string.Empty;
-                            AppendText(InputHistory[historyIterator]);
+                            AppendText(InputHistory[_inputHistoryIterator]);
                             e.Handled = true;
                         }
                         else
-                            historyIterator = InputHistory.Count - 1;
+                            _inputHistoryIterator = InputHistory.Count;
 
                         e.Handled = true;
                         break;
@@ -231,7 +233,7 @@ namespace ExcelsiorConsole
                         break;
                     }
                 default:
-                    historyIterator = InputHistory.Count;
+                    _inputHistoryIterator = InputHistory.Count;
                     break;
             }
         }

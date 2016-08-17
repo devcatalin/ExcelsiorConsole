@@ -7,8 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using ExcelsiorConsole.Global.Commands;
-using ExcelsiorConsole.Users.Stunt3r.Commands;
+using ExcelsiorConsole.Global;
+using ExcelsiorConsole.Users.Stunt3r;
 
 namespace ExcelsiorConsole
 {

@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 using System.Drawing;
-using System.Windows.Forms;
-using System.Diagnostics;
-using System.Text.RegularExpressions;
 
-namespace ExcelsiorConsole.Users.Stunt3r.Commands
+namespace ExcelsiorConsole.Users.Stunt3r
 {
     class StopwatchCmd : Command
     {
