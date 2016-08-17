@@ -10,3 +10,12 @@ C:\Users\Catalin\Documents\GitHub\Stunt3r-Bash\obj\Debug\ExcelsiorConsole.pdb
 C:\Users\Catalin\Desktop\Backup\bin\Debug\ExcelsiorConsole.exe.config
 C:\Users\Catalin\Desktop\Backup\obj\Debug\ExcelsiorConsole.exe
 C:\Users\Catalin\Desktop\Backup\obj\Debug\ExcelsiorConsole.pdb
+C:\Users\Catalin\Documents\GitHub\ExcelsiorConsole\bin\Debug\ExcelsiorConsole.exe.config
+C:\Users\Catalin\Documents\GitHub\ExcelsiorConsole\obj\Debug\ExcelsiorConsole.exe
+C:\Users\Catalin\Documents\GitHub\ExcelsiorConsole\obj\Debug\ExcelsiorConsole.pdb
+C:\Users\Catalin\Documents\GitHub\ExcelsiorConsole\bin\Debug\ExcelsiorConsole.exe
+C:\Users\Catalin\Documents\GitHub\ExcelsiorConsole\bin\Debug\ExcelsiorConsole.pdb
+C:\Users\Catalin\Documents\GitHub\ExcelsiorConsole\obj\Debug\ExcelsiorConsole.csprojResolveAssemblyReference.cache
+C:\Users\Catalin\Documents\GitHub\ExcelsiorConsole\obj\Debug\ExcelsiorConsole.MainWindow.resources
+C:\Users\Catalin\Documents\GitHub\ExcelsiorConsole\obj\Debug\ExcelsiorConsole.Properties.Resources.resources
+C:\Users\Catalin\Documents\GitHub\ExcelsiorConsole\obj\Debug\ExcelsiorConsole.csproj.GenerateResource.Cache

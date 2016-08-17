@@ -22,8 +22,10 @@ namespace ExcelsiorConsole
 
         public List<Command> Commands = new List<Command>();
 
-        public event EventHandler<CommandEventArgs> RecievedCommand;
+        public List<string> InputHistory { get; set; } = new List<string>();
+        private int historyIterator;
 
+        public event EventHandler<CommandEventArgs> RecievedCommand;
 
         public ConsoleWindow()
         {
@@ -137,7 +139,13 @@ namespace ExcelsiorConsole
                             break;
                         }
 
-                        string input = Text.Remove(0, _commandPosition);
+                        //string input = Text.Remove(0, _commandPosition);
+                        Select(_commandPosition, Text.Length);
+                        string input = SelectedText;
+
+                        InputHistory.Add(input);
+                        historyIterator = InputHistory.Count;
+
                         string[] inputParts = input.Split(' ');
                         string[] inputArgs = null;
                         string inputCommand = inputParts[0];
@@ -185,7 +193,34 @@ namespace ExcelsiorConsole
                         break;
                     }
                 case Keys.Up:
+                {
+                    historyIterator--;
+                    if (historyIterator >= 0)
                     {
+                        Select(_commandPosition, Text.Length);
+                        SelectedText = string.Empty;
+                        AppendText(InputHistory[historyIterator]);
+                        e.Handled = true;
+                    }
+                    else
+                        historyIterator = 0;
+
+                    e.Handled = true;
+                    break;
+                    }
+                case Keys.Down:
+                    {
+                        historyIterator++;
+                        if (historyIterator < InputHistory.Count)
+                        {
+                            Select(_commandPosition, Text.Length);
+                            SelectedText = string.Empty;
+                            AppendText(InputHistory[historyIterator]);
+                            e.Handled = true;
+                        }
+                        else
+                            historyIterator = InputHistory.Count - 1;
+
                         e.Handled = true;
                         break;
                     }
@@ -195,6 +230,9 @@ namespace ExcelsiorConsole
                             e.Handled = true;
                         break;
                     }
+                default:
+                    historyIterator = InputHistory.Count;
+                    break;
             }
         }
 
