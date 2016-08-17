@@ -6,8 +6,6 @@ public static class CommandsGenerator {
 		List<Command> commands = new List<Command>();
 				
 		commands.Add(new ExcelsiorConsole.Users.Stunt3r.StopwatchCmd(cw));
-		
-		commands.Add(new ExcelsiorConsole.Users.Stunt3r.StopwatchCmd(cw));
 
 		return commands;
 	}
