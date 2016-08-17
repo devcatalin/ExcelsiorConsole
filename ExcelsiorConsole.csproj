@@ -56,6 +56,7 @@
       <DependentUpon>bubble.tt</DependentUpon>
     </Compile>
     <Compile Include="Command.cs" />
+    <Compile Include="Global\CalculateCmd.cs" />
     <Compile Include="Global\ClearCmd.cs" />
     <Compile Include="ConsoleWindow.cs">
       <SubType>Component</SubType>
@@ -114,9 +115,6 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  <ItemGroup Condition="13 != 37">
-    <Compile Include="Users\Stunt3r\StopwatchCmd.cs" />
-  </ItemGroup>
   <ItemGroup>
     <Folder Include="Users\Stunt3r\" />
   </ItemGroup>
