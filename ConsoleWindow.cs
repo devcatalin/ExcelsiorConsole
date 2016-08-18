@@ -30,15 +30,17 @@ namespace ExcelsiorConsole
 
         public event EventHandler<CommandEventArgs> RecievedCommand;
 
-        public ConsoleWindow()
+        public ConsoleWindow(ConsoleWindowSettings settings = null)
         {
-            ConsoleColor = Color.FromArgb(70, 131, 187);
-            InputHistory = new List<InputLine>();;
+            if (settings == null) settings = new ConsoleWindowSettings();
+
+            ConsoleColor = settings.ConsoleColor;
+            InputHistory = new List<InputLine>();
             _filteredFillingCommands = new List<string>();
-            
-            Font = new Font(new FontFamily("Consolas"), 20, FontStyle.Regular);
-            BackColor = Color.Black;
-            ForeColor = Color.FromArgb(45, 158, 187);
+
+            Font = settings.Font;
+            BackColor = settings.BackColor;
+            ForeColor = settings.ForeColor;
             Dock = DockStyle.Fill;
 
             AcceptsTab = true;

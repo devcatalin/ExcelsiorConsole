@@ -20,10 +20,13 @@ namespace ExcelsiorConsole
         [System.Runtime.InteropServices.DllImport("user32.dll")]
         private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
 
-        ConsoleWindow console = new ConsoleWindow();
+        ConsoleWindow console = null;
 
-        public MainWindow()
+        public MainWindow(ConsoleWindow console = null)
         {
+            if (console == null) console = new ConsoleWindow();
+            this.console = console;
+
             InitializeComponent();
 
             const int VK_Z = 0x6A;

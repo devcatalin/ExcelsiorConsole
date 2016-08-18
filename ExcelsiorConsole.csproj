@@ -56,6 +56,7 @@
   <ItemGroup>
     <Compile Include="Bubble\bubble.cs" />
     <Compile Include="Command.cs" />
+    <Compile Include="ConsoleWindowSettings.cs" />
     <Compile Include="Global\CalculateCmd.cs" />
     <Compile Include="Global\ClearCmd.cs" />
     <Compile Include="ConsoleWindow.cs">
