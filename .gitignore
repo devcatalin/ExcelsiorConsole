@@ -305,3 +305,7 @@ Bubble/bubble.cs
 Bubble/modules.txt
 ExcelsiorConsole.csproj
 Bubble/bubble.cs
+
+
+# python compilations
+*.pyc
