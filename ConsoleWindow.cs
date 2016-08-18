@@ -37,6 +37,8 @@ namespace ExcelsiorConsole
             ForeColor = Color.FromArgb(45, 158, 187);
             Dock = DockStyle.Fill;
 
+            AcceptsTab = true;
+
             string date = DateTime.Now.ToString();
             AppendText("Excelsior Console - " + date + Environment.NewLine, Color.DarkCyan);
             _startingLinePosition = Text.Length;
@@ -122,6 +124,20 @@ namespace ExcelsiorConsole
             }
         }
 
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == Keys.Tab)
+            {
+                Select(_commandPosition, Text.Length);
+                string input = SelectedText;
+                DeselectAll();
+
+                return true;
+            }
+
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
+
         protected override void OnKeyDown(KeyEventArgs e)
         {
 
@@ -142,9 +158,10 @@ namespace ExcelsiorConsole
                             break;
                         }
 
-                        string input = Text.Remove(0, _commandPosition);
-//                        Select(_commandPosition, Text.Length);
-//                        string input = SelectedText;
+                        //string input = Text.Remove(0, _commandPosition);
+                        Select(_commandPosition, Text.Length - _commandPosition);
+                        string input = SelectedText;
+                        DeselectAll();
 
                         InputHistory.Add(input);
                         _inputHistoryIterator = InputHistory.Count;
@@ -195,8 +212,14 @@ namespace ExcelsiorConsole
                             e.Handled = true;
                         break;
                     }
+                case Keys.Tab:
+                    {
+                        //MessageBox.Show("Test");
+                        e.Handled = true;
+                        break;
+                    }
                 case Keys.Up:
-                {
+                    {
                     _inputHistoryIterator--;
                     if (_inputHistoryIterator >= 0)
                     {

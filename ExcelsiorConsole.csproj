@@ -61,6 +61,7 @@
     <Compile Include="ConsoleWindow.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Global\ComputerCmd.cs" />
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -115,7 +116,8 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  <ItemGroup>
-    <Folder Include="Users\Stunt3r\" />
+  <ItemGroup />
+  <ItemGroup Condition="13 != 37">
+    <Compile Include="Users\Stunt3r\StopwatchCmd.cs" />
   </ItemGroup>
 </Project>

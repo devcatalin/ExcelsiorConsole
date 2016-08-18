@@ -301,3 +301,7 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+Bubble/bubble.cs
+Bubble/modules.txt
+ExcelsiorConsole.csproj
+Bubble/bubble.cs

@@ -18,15 +18,14 @@ namespace ExcelsiorConsole.Global
 
         public override void Execute()
         {
-            if (Args != null)
-            {
-                string expressionString = string.Join("", Args);
-                Calculate(expressionString);
-            }
-            else
+            if (Args == null)
             {
                 base.Execute();
+                return;
             }
+
+            string expressionString = string.Join("", Args);
+            Calculate(expressionString);
         }
 
         public override void Console_RecievedCommand(object sender, ConsoleWindow.CommandEventArgs e)
