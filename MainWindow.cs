@@ -54,6 +54,7 @@ namespace ExcelsiorConsole
             this.Controls.Add(console);
             console.Commands.Add(new ClearCmd(console));
             console.Commands.Add(new CalculateCmd(console));
+            console.Commands.Add(new ComputerCmd(console));
             console.Commands.AddRange(CommandsGenerator.GetCommands(console));
         }
 

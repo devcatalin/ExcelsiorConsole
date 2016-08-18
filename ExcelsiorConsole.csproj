@@ -62,6 +62,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Global\ComputerCmd.cs" />
+    <Compile Include="InputLine.cs" />
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
