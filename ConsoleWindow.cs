@@ -188,7 +188,7 @@ namespace ExcelsiorConsole
                         }
                         else
                         {
-                            Command command = Commands.FirstOrDefault(c => c.CommandLabel == inputCommand.ToLower() || c.Aliases.Contains(inputCommand.ToLower()));
+                            Command command = Commands.FirstOrDefault(c => c.CommandLabel.ToLower() == inputCommand.ToLower() || c.Aliases.Where(alias => alias.ToLower() == inputCommand.ToLower()).ToList().Count > 0);
                             if (command != null)
                             {
                                 command.Args = inputArgs;

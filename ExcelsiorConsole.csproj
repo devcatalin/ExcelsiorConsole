@@ -107,9 +107,6 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  <ItemGroup>
-    <Folder Include="Users\ioanb7\" />
-    <Folder Include="Users\Stunt3r\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup Condition="13 != 37" />
 </Project>
