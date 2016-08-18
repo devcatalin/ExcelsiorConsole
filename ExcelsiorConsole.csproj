@@ -107,15 +107,9 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-<<<<<<< HEAD
-  <ItemGroup />
-  <ItemGroup Condition="13 != 37">
-    <Compile Include="Users\Stunt3r\StopwatchCmd.cs" />
-=======
   <ItemGroup>
     <Folder Include="Users\ioanb7\" />
     <Folder Include="Users\Stunt3r\" />
->>>>>>> bc871868c4e4f10183ef76cb90b82519e96838fa
   </ItemGroup>
   <ItemGroup Condition="13 != 37" />
 </Project>
