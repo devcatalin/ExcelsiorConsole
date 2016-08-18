@@ -50,11 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bubble\bubble.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>bubble.tt</DependentUpon>
-    </Compile>
+    <Compile Include="Bubble\bubble.cs" />
     <Compile Include="Command.cs" />
     <Compile Include="Global\CalculateCmd.cs" />
     <Compile Include="Global\ClearCmd.cs" />
@@ -97,11 +93,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Bubble\bubble.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>bubble.cs</LastGenOutput>
-    </Content>
-    <Content Include="Bubble\modules.txt" />
     <Content Include="Libs\mxparser.dll" />
   </ItemGroup>
   <ItemGroup>
@@ -116,6 +107,8 @@
   </Target>
   -->
   <ItemGroup>
+    <Folder Include="Users\ioanb7\" />
     <Folder Include="Users\Stunt3r\" />
   </ItemGroup>
+  <ItemGroup Condition="13 != 37" />
 </Project>
