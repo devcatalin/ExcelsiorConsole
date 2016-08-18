@@ -22,7 +22,7 @@ namespace ExcelsiorConsole.Global
                 return;
             }
 
-            if (Args.Count() == 1)
+            if (Args.Length == 1)
             {
 
             }
