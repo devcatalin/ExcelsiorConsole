@@ -32,6 +32,7 @@ namespace ExcelsiorConsole.Users.ioanb7
 
         public void PopulateTorrents(string query = "sense8")
         {
+            if (Args != null && Args[0].Trim() != "") query = Args[0];
             System.IO.File.WriteAllText(jsonResultPath, "");
             string result = RunProcess("cmd.exe", ("/c scrapy runspider " + thisDir + "\\PirateBay\\myspider.py -a query=" + query + " -o resultpiratebay.json"));
 
