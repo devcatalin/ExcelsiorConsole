@@ -18,13 +18,13 @@ namespace ExcelsiorConsole.Global
 
         public override void Execute()
         {
-            if (Args == null)
+            if (Args.Count == 0)
             {
                 base.Execute();
                 return;
             }
 
-            string expressionString = string.Join("", Args);
+            string expressionString = Args[0];
             Calculate(expressionString);
         }
 
@@ -34,12 +34,7 @@ namespace ExcelsiorConsole.Global
                 Exit();
             else
             {
-                string expressionString = "";
-
-                if (Args != null)
-                    expressionString = e.Label + string.Join("", Args);
-                else
-                    expressionString = e.Label;
+                string expressionString = Args != null ? e.Args[0] : e.Label;
 
                 Expression expression = new Expression(expressionString);
                 Console.WriteLine(expression.calculate().ToString(), Color.DarkCyan);

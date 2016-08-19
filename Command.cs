@@ -12,7 +12,7 @@ namespace ExcelsiorConsole
         public Console Console { get; set; }
         public string Label { get; set; }
         public List<string> Aliases { get; set; }
-        public string[] Args { get; set; }
+        public List<string> Args { get; set; }
 
         public string[] Dependencies { get; set; }     
 

@@ -235,6 +235,7 @@ namespace ExcelsiorConsole
                             if (command != null)
                             {
                                 command.Args = inputLine.CommandArgs;
+                                WriteLine(inputLine.CommandArgs[0], Color.Red);
                                 if (command.CanExecute())
                                     command.Execute();
                                 inputLine.IsCommand = true;
@@ -338,7 +339,7 @@ namespace ExcelsiorConsole
         public class CommandEventArgs : EventArgs
         {
             public string Label { get; set; }
-            public string[] Args { get; set; }
+            public List<string> Args { get; set; }
         }
     }
 }

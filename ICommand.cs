@@ -10,7 +10,7 @@ namespace ExcelsiorConsole
     {
         Console Console { get; set; }
         string Label { get; set; }
-        string[] Args { get; set; }
+        List<string> Args { get; set; }
         void Execute();
     }
 }

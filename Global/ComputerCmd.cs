@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace ExcelsiorConsole.Global
 {
@@ -22,7 +23,7 @@ namespace ExcelsiorConsole.Global
                 return;
             }
 
-            if (Args.Length == 1)
+            if (Args.Count == 1)
             {
 
             }
