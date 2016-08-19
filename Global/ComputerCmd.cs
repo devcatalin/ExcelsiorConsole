@@ -8,7 +8,7 @@ namespace ExcelsiorConsole.Global
 {
     class ComputerCmd : Command
     {
-        public ComputerCmd(ConsoleWindow c) : base(c)
+        public ComputerCmd(Console c) : base(c)
         {
             Label = "computer";
             Aliases.Add("comp");

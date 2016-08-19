@@ -10,7 +10,7 @@ namespace ExcelsiorConsole.Global
 {
     class CalculateCmd : Command
     {
-        public CalculateCmd(ConsoleWindow c) : base(c)
+        public CalculateCmd(Console c) : base(c)
         {
             Label = "calculate";
             Aliases.Add("calc");
@@ -28,7 +28,7 @@ namespace ExcelsiorConsole.Global
             Calculate(expressionString);
         }
 
-        public override void Console_RecievedCommand(object sender, ConsoleWindow.CommandEventArgs e)
+        public override void Console_RecievedCommand(object sender, Console.CommandEventArgs e)
         {
             if (e.Label == "exit" || e.Label == "quit" || e.Label == "close")
                 Exit();

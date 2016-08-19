@@ -2,7 +2,7 @@
 {
     class ClearCmd : Command
     {
-        public ClearCmd(ConsoleWindow c) : base(c)
+        public ClearCmd(Console c) : base(c)
         {
             Label = "clear";
         }

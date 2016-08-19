@@ -2,7 +2,7 @@
 
 namespace ExcelsiorConsole
 {
-    public class ConsoleWindowSettings
+    public class ConsoleSettings
     {
         private Color _consoleColor = Color.FromArgb(70, 131, 187);
         public Color ConsoleColor
