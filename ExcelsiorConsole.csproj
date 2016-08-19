@@ -58,11 +58,11 @@
     <Compile Include="Bubble\bubble.cs" />
     <Compile Include="CaretPosition.cs" />
     <Compile Include="Command.cs" />
-    <Compile Include="ConsoleWindowSettings.cs" />
+    <Compile Include="ConsoleSettings.cs" />
     <Compile Include="Execution.cs" />
     <Compile Include="Global\CalculateCmd.cs" />
     <Compile Include="Global\ClearCmd.cs" />
-    <Compile Include="ConsoleWindow.cs">
+    <Compile Include="Console.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Global\ComputerCmd.cs" />

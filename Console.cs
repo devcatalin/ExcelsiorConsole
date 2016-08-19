@@ -8,15 +8,15 @@ using System.Drawing;
 
 namespace ExcelsiorConsole
 {
-    public class ConsoleWindow : RichTextBox
+    public class Console : RichTextBox
     {
+        public new string Name { get { return "excelsior"; } }
+
+        public Color Color { get; set; }
+
         public CaretPosition CaretPosition { get; set; }
 
-        public string ConsoleName { get { return "excelsior"; } }
-
         public Execution Execution { get; set; }
-
-        public Color ConsoleColor { get; set; }
 
         public List<Command> Commands = new List<Command>();
 
@@ -26,13 +26,13 @@ namespace ExcelsiorConsole
 
         public event EventHandler<CommandEventArgs> RecievedCommand;
 
-        public ConsoleWindow(ConsoleWindowSettings settings = null)
+        public Console(ConsoleSettings settings = null)
         {
-            if (settings == null) settings = new ConsoleWindowSettings();
+            if (settings == null) settings = new ConsoleSettings();
 
             Execution = new Execution();
 
-            ConsoleColor = settings.ConsoleColor;
+            Color = settings.ConsoleColor;
 
             AutoFill = new AutoFill(this);
 
@@ -108,7 +108,7 @@ namespace ExcelsiorConsole
                 return new string(' ', Execution.CommandLabel.Length + 3);
 
             if (Execution.State == ExecutionState.ExecuteCommand)
-                return new string(' ', ConsoleName.Length + 3);
+                return new string(' ', Name.Length + 3);
 
             return "error";
         }
@@ -129,7 +129,7 @@ namespace ExcelsiorConsole
             CaretPosition.LineStart = Text.Length + 1;
 
             if (Execution.State == ExecutionState.ExecuteCommand)
-                ShowIndentingWord(ConsoleName, ConsoleColor);
+                ShowIndentingWord(Name, Color);
             else if (Execution.State == ExecutionState.RecieveCommands)
                 ShowIndentingWord(Execution.CommandLabel, Color.DodgerBlue);
         }

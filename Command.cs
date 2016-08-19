@@ -9,14 +9,14 @@ namespace ExcelsiorConsole
 {
     public class Command : ICommand
     {
-        public ConsoleWindow Console { get; set; }
+        public Console Console { get; set; }
         public string Label { get; set; }
         public List<string> Aliases { get; set; }
         public string[] Args { get; set; }
 
         public string[] Dependencies { get; set; }     
 
-        public Command(ConsoleWindow c)
+        public Command(Console c)
         {
             Aliases = new List<string>();
             this.Console = c;
@@ -41,7 +41,7 @@ namespace ExcelsiorConsole
             Console.RecievedCommand -= Console_RecievedCommand;
         }
 
-        public virtual void Console_RecievedCommand(object sender, ConsoleWindow.CommandEventArgs e)
+        public virtual void Console_RecievedCommand(object sender, Console.CommandEventArgs e)
         {
             
         }

@@ -23,7 +23,7 @@ namespace ExcelsiorConsole.Users.ioanb7
         public string jsonResultPath = @"../temp/resultpiratebay.json";
         string thisDir = @"C:\Users\484327\Documents\GitHub\ExcelsiorConsole\Users\ioanb7";
         public string scrapy = @"C:\Python27\Scripts\scrapy.exe";
-        public piratebayCmd(ConsoleWindow c) : base(c)
+        public piratebayCmd(Console c) : base(c)
         {
             Label = "piratebay";
 
@@ -62,7 +62,7 @@ namespace ExcelsiorConsole.Users.ioanb7
             }
         }
         
-        public override void Console_RecievedCommand(object sender, ConsoleWindow.CommandEventArgs e)
+        public override void Console_RecievedCommand(object sender, Console.CommandEventArgs e)
         {
             int id = 0;
             int.TryParse(e.Label, out id);

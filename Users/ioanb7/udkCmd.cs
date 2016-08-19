@@ -2,7 +2,7 @@
 {
     class udkCmd : Command
     {
-        public udkCmd(ConsoleWindow c) : base(c)
+        public udkCmd(Console c) : base(c)
         {
             Label = "udk";
         }

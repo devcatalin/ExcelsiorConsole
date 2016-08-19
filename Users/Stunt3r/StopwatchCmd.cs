@@ -5,7 +5,7 @@ namespace ExcelsiorConsole.Users.Stunt3r
 {
     class StopwatchCmd : Command
     {
-        public StopwatchCmd(ConsoleWindow c) : base(c)
+        public StopwatchCmd(Console c) : base(c)
         {
             Label = "stopwatch";
         }
@@ -26,7 +26,7 @@ namespace ExcelsiorConsole.Users.Stunt3r
             stopwatch.Reset();
         }
 
-        public override void Console_RecievedCommand(object sender, ConsoleWindow.CommandEventArgs e)
+        public override void Console_RecievedCommand(object sender, Console.CommandEventArgs e)
         {
             switch (e.Label)
             {

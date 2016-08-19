@@ -11,9 +11,9 @@ namespace ExcelsiorConsole
         public int LineStart { get; set; }
         public int CommandStart { get; set; }
 
-        private readonly ConsoleWindow _console;
+        private readonly Console _console;
 
-        public CaretPosition(ConsoleWindow c)
+        public CaretPosition(Console c)
         {
             _console = c;
         }
@@ -21,7 +21,7 @@ namespace ExcelsiorConsole
         public void Reset()
         {
             LineStart = _console.Text.Length + 1;
-            CommandStart = LineStart + _console.ConsoleName.Length + 3;
+            CommandStart = LineStart + _console.Name.Length + 3;
         }
     }
 }

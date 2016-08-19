@@ -8,9 +8,9 @@ namespace ExcelsiorConsole
 {
     public class AutoFill
     {
-        private ConsoleWindow console;
+        private Console console;
 
-        public AutoFill(ConsoleWindow c)
+        public AutoFill(Console c)
         {
             console = c;
         }
