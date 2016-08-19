@@ -13,8 +13,6 @@ namespace ExcelsiorConsole
 {
     public partial class MainWindow : Form
     {
-        int consoleStartingLinePosition = 0;
-
         [System.Runtime.InteropServices.DllImport("user32.dll")]
         private static extern bool RegisterHotKey(IntPtr hWnd, int id, int fsModifiers, int vk);
         [System.Runtime.InteropServices.DllImport("user32.dll")]

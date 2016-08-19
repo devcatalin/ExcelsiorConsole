@@ -10,23 +10,19 @@ namespace ExcelsiorConsole
 {
     public class ConsoleWindow : RichTextBox
     {
-        int _startingLinePosition = 0;
-        int _commandPosition;
+        public CaretPosition CaretPosition { get; set; }
 
         public string ConsoleName { get { return "excelsior"; } }
 
-        public bool InExecution { get; set; }
-        public string NameOfExecutingCommand { get; set; }
+        public Execution Execution { get; set; }
 
         public Color ConsoleColor { get; set; }
 
         public List<Command> Commands = new List<Command>();
 
-        public List<InputLine> InputHistory { get; set; }
-        private int _indexInputHistory;
-        private bool _isAutoFilling;
-        private List<string> _filteredFillingCommands;
-        private int _indexFilteredFillingCommands;
+        public InputHistory InputHistory { get; set; } = new InputHistory();
+
+        public AutoFill AutoFill { get; set; }
 
         public event EventHandler<CommandEventArgs> RecievedCommand;
 
@@ -34,9 +30,13 @@ namespace ExcelsiorConsole
         {
             if (settings == null) settings = new ConsoleWindowSettings();
 
+            Execution = new Execution();
+
             ConsoleColor = settings.ConsoleColor;
-            InputHistory = new List<InputLine>();
-            _filteredFillingCommands = new List<string>();
+
+            AutoFill = new AutoFill(this);
+
+            CaretPosition = new CaretPosition(this);
 
             Font = settings.Font;
             BackColor = settings.BackColor;
@@ -46,10 +46,8 @@ namespace ExcelsiorConsole
             AcceptsTab = true;
 
             string date = DateTime.Now.ToString();
-            AppendText("Excelsior Console - " + date + Environment.NewLine, Color.DarkCyan);
-            _startingLinePosition = Text.Length;
-            _commandPosition = _startingLinePosition + ConsoleName.Length + 3;
-            AppendText("<" + ConsoleName + "> ", ConsoleColor);
+            AppendText("Excelsior Console - " + date, Color.DarkCyan);
+            NewLine();
         }
 
         public void ClearConsole()
@@ -57,8 +55,7 @@ namespace ExcelsiorConsole
             Clear();
             string date = DateTime.Now.ToString();
             AppendText("Console cleared - " + date, Color.DarkCyan);
-            _startingLinePosition = Text.Length + 1;
-            _commandPosition = _startingLinePosition + ConsoleName.Length + 3;
+            CaretPosition.Reset();
         }
 
         //Disables mouse events;
@@ -105,78 +102,85 @@ namespace ExcelsiorConsole
             SelectionColor = ForeColor;
         }
 
-        public void Write(string message, Color color)
+        private string GetIndentation()
         {
-            string spaces = " ";
-            if (string.IsNullOrEmpty(NameOfExecutingCommand))
-                spaces = new string(' ', ConsoleName.Length + 3);
-            else
-                spaces = new string(' ', NameOfExecutingCommand.Length + 3);
-            AppendText(Environment.NewLine + spaces + message, color);
+            if (Execution.State == ExecutionState.RecieveCommands)
+                return new string(' ', Execution.CommandLabel.Length + 3);
+
+            if (Execution.State == ExecutionState.ExecuteCommand)
+                return new string(' ', ConsoleName.Length + 3);
+
+            return "error";
+        }
+
+        public void WriteLine(string message, Color color)
+        {
+            AppendText(Environment.NewLine + GetIndentation() + message, color);
+        }
+
+        private void ShowIndentingWord(string word, Color color)
+        {
+            AppendText(Environment.NewLine + "<" + word + "> ", color);
+            CaretPosition.CommandStart = CaretPosition.LineStart + word.Length + 3;
         }
 
         public void NewLine()
         {
-            _startingLinePosition = Text.Length + 1;
-            if (string.IsNullOrEmpty(NameOfExecutingCommand))
-            {
-                AppendText(Environment.NewLine + "<" + ConsoleName + "> ", ConsoleColor);
-                _commandPosition = _startingLinePosition + ConsoleName.Length + 3;
-            }
-            else
-            {
-                AppendText(Environment.NewLine + @"<" + NameOfExecutingCommand + "> ", Color.DodgerBlue);
-                _commandPosition = _startingLinePosition + NameOfExecutingCommand.Length + 3;
-            }
+            CaretPosition.LineStart = Text.Length + 1;
+
+            if (Execution.State == ExecutionState.ExecuteCommand)
+                ShowIndentingWord(ConsoleName, ConsoleColor);
+            else if (Execution.State == ExecutionState.RecieveCommands)
+                ShowIndentingWord(Execution.CommandLabel, Color.DodgerBlue);
+        }
+
+        private void SelectInputLine()
+        {
+            Select(CaretPosition.CommandStart, Text.Length - CaretPosition.CommandStart);
         }
 
         private void ClearInputLine()
         {
-            Select(_commandPosition, Text.Length - _commandPosition);
+            SelectInputLine();
             SelectedText = string.Empty;
         }
 
-        private void FilterCommands(string input)
+        private string GetInputText()
         {
-            _filteredFillingCommands = (from command in Commands
-                                        where command.CommandLabel.StartsWith(input)
-                                        orderby command.CommandLabel
-                                        select command.CommandLabel).ToList();
+            SelectInputLine();
+            return SelectedText;
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             if (keyData == Keys.Tab)
             {
-                Select(_commandPosition, Text.Length - _commandPosition);
-                string input = SelectedText;
+                string input = GetInputText();
 
                 if (!string.IsNullOrWhiteSpace(input))
                 {
-                    var inputHistory = InputHistory.LastOrDefault(ih => ih.Text.StartsWith(input) && ih.IsCommand);
+                    var inputHistory = InputHistory.Lines.LastOrDefault(line => line.Text.StartsWith(input) && line.IsCommand);
 
                     if (inputHistory != null)
                     {
                         ClearInputLine();
 
-                        FilterCommands(input);
+                        AutoFill.FilterCommands(input);
                         AppendText(inputHistory.CommandLabel);
 
-                        _indexFilteredFillingCommands = -1;
-                        _isAutoFilling = true;
+                        AutoFill.Index = -1;
+                        AutoFill.Enabled = true;
                     }
                     else
                     {
                         ClearInputLine();
-                        FilterCommands(input);
+                        AutoFill.FilterCommands(input);
 
-                        if (_filteredFillingCommands.Any())
+                        if (AutoFill.Commands.Any())
                         {
-                            _indexFilteredFillingCommands = 0;
-
-                            AppendText(_filteredFillingCommands[_indexFilteredFillingCommands]);
-
-                            _isAutoFilling = true;
+                            AutoFill.Index = 0;
+                            AppendText(AutoFill.GetCommand());
+                            AutoFill.Enabled = true;
                         }
                     }
                 }
@@ -189,10 +193,9 @@ namespace ExcelsiorConsole
 
         protected override void OnKeyDown(KeyEventArgs e)
         {
-
             if (e.Control && e.KeyValue == 'A')
             {
-                Select(_commandPosition, Text.Length);
+                SelectInputLine();
                 e.Handled = true;
             }
 
@@ -201,25 +204,15 @@ namespace ExcelsiorConsole
                 case Keys.Enter:
                     {
 
-                        if (Text.Length <= _commandPosition)
+                        if (Text.Length <= CaretPosition.CommandStart)
                         {
                             NewLine();
                             e.Handled = true;
                             break;
                         }
 
-                        //string input = Text.Remove(0, _commandPosition);
-                        InputLine inputLine = new InputLine();
-
-                        Select(_commandPosition, Text.Length - _commandPosition);
-                        inputLine.Text = SelectedText;
+                        InputLine inputLine = new InputLine(GetInputText());
                         DeselectAll();
-
-                        string[] inputParts = inputLine.Text.Split(' ');
-                        inputLine.CommandLabel = inputParts[0];
-
-                        if (inputParts.Count() > 1)
-                            inputLine.CommandArgs = inputParts.Skip(1).ToArray();
 
                         if (string.IsNullOrWhiteSpace(inputLine.CommandLabel))
                         {
@@ -228,16 +221,16 @@ namespace ExcelsiorConsole
                             break;
                         }
 
-                        if (InExecution)
+                        if (Execution.State == ExecutionState.RecieveCommands)
                         {
                             CommandEventArgs eventArgs = new CommandEventArgs();
-                            eventArgs.Command = inputLine.CommandLabel;
+                            eventArgs.Label = inputLine.CommandLabel;
                             eventArgs.Args = inputLine.CommandArgs;
                             RecievedCommand(this, eventArgs);
                         }
                         else
                         {
-                            Command command = Commands.FirstOrDefault(c => c.CommandLabel.ToLower() == inputLine.CommandLabel.ToLower() || 
+                            Command command = Commands.FirstOrDefault(c => c.Label.ToLower() == inputLine.CommandLabel.ToLower() || 
                                                                            c.Aliases.Any(alias => alias.ToLower() == inputLine.CommandLabel.ToLower()));
                             if (command != null)
                             {
@@ -248,14 +241,14 @@ namespace ExcelsiorConsole
                             }
                             else
                             {
-                                Write("Command not found.", Color.DarkRed);
+                                WriteLine("Command not found.", Color.DarkRed);
                                 inputLine.IsCommand = false;
                             }
                         }
 
-                        InputHistory.Add(inputLine);
-                        _indexInputHistory = InputHistory.Count;
-                        _isAutoFilling = false;
+                        InputHistory.Lines.Add(inputLine);
+                        InputHistory.Index = InputHistory.Lines.Count;
+                        AutoFill.Enabled = false;
                         NewLine();
 
                         e.Handled = true;
@@ -263,41 +256,38 @@ namespace ExcelsiorConsole
                     }
                 case Keys.Back:
                     {
-                        if (Text.Length - _commandPosition <= 0)
+                        if (Text.Length - CaretPosition.CommandStart <= 0)
                             e.Handled = true;
                         break;
                     }
                 case Keys.Up:
                     {
-                        if (_isAutoFilling)
+                        if (AutoFill.Enabled)
                         {
-                            if (_indexFilteredFillingCommands >= 0)
+                            if (AutoFill.Index >= 0)
                             {
-                                if (_indexFilteredFillingCommands - 1 >= 0)
-                                    _indexFilteredFillingCommands--;
-                                Select(_commandPosition, Text.Length);
-                                SelectedText = string.Empty;
-                                AppendText(_filteredFillingCommands[_indexFilteredFillingCommands]);
+                                AutoFill.GoUp();
+                                ClearInputLine();
+                                AppendText(AutoFill.GetCommand());
                             }
-                            else if (_indexFilteredFillingCommands == -1)
+                            else if (AutoFill.Index == -1)
                             {
-                                _indexFilteredFillingCommands = _filteredFillingCommands.Count - 1;
-                                Select(_commandPosition, Text.Length);
-                                SelectedText = string.Empty;
-                                AppendText(_filteredFillingCommands[_indexFilteredFillingCommands]);
+                                AutoFill.Index = AutoFill.Commands.Count - 1;
+                                ClearInputLine();
+                                AppendText(AutoFill.GetCommand());
                             }
                         }
                         else
                         {
-                            _indexInputHistory--;
-                            if (_indexInputHistory >= 0)
+                            InputHistory.Index--;
+
+                            if (InputHistory.Index >= 0)
                             {
-                                Select(_commandPosition, Text.Length);
-                                SelectedText = string.Empty;
-                                AppendText(InputHistory[_indexInputHistory].Text);
+                                ClearInputLine();
+                                AppendText(InputHistory.GetLine().Text);
                             }
                             else
-                                _indexInputHistory = 0;
+                                InputHistory.Index = 0;
                         }  
 
                     e.Handled = true;
@@ -305,31 +295,28 @@ namespace ExcelsiorConsole
                     }
                 case Keys.Down:
                     {
-                        if (_isAutoFilling)
+                        if (AutoFill.Enabled)
                         {
-                            if (_indexFilteredFillingCommands < _filteredFillingCommands.Count())
+                            if (AutoFill.Index < AutoFill.Commands.Count())
                             {
-                                if (_indexFilteredFillingCommands + 1 < _filteredFillingCommands.Count())
-                                    _indexFilteredFillingCommands++;
-                                Select(_commandPosition, Text.Length);
-                                SelectedText = string.Empty;
-                                AppendText(_filteredFillingCommands[_indexFilteredFillingCommands]);
+                                AutoFill.GoDown();
+                                ClearInputLine();
+                                AppendText(AutoFill.GetCommand());
                             }
                         }
                         else
                         {
-                            _indexInputHistory++;
+                            InputHistory.Index++;
 
-                            Select(_commandPosition, Text.Length);
-                            SelectedText = string.Empty;
+                            ClearInputLine();
 
-                            if (_indexInputHistory < InputHistory.Count)
+                            if (InputHistory.Index < InputHistory.Lines.Count)
                             {
-                                AppendText(InputHistory[_indexInputHistory].Text);
+                                AppendText(InputHistory.GetLine().Text);
                                 e.Handled = true;
                             }
                             else
-                                _indexInputHistory = InputHistory.Count;
+                                InputHistory.Index = InputHistory.Lines.Count;
                         }
 
                         e.Handled = true;
@@ -337,22 +324,20 @@ namespace ExcelsiorConsole
                     }
                 case Keys.Left:
                     {
-                        if (SelectionStart <= _commandPosition)
+                        if (SelectionStart <= CaretPosition.CommandStart)
                             e.Handled = true;
                         break;
                     }
                 default:
-                    _indexInputHistory = InputHistory.Count;
-                    _indexFilteredFillingCommands = 0;
-                    _isAutoFilling = false;
-                    //_filteredFillingCommands.Clear(); - do I need this ?
+                    InputHistory.Index = InputHistory.Lines.Count;
+                    AutoFill.Reset();
                     break;
             }
         }
 
         public class CommandEventArgs : EventArgs
         {
-            public string Command { get; set; }
+            public string Label { get; set; }
             public string[] Args { get; set; }
         }
     }

@@ -9,8 +9,8 @@ namespace ExcelsiorConsole
 {
     public class Command : ICommand
     {
-        public ConsoleWindow console { get; set; }
-        public string CommandLabel { get; set; }
+        public ConsoleWindow Console { get; set; }
+        public string Label { get; set; }
         public List<string> Aliases { get; set; }
         public string[] Args { get; set; }
 
@@ -19,7 +19,7 @@ namespace ExcelsiorConsole
         public Command(ConsoleWindow c)
         {
             Aliases = new List<string>();
-            this.console = c;
+            this.Console = c;
         }
 
         public virtual bool CanExecute()
@@ -29,16 +29,16 @@ namespace ExcelsiorConsole
 
         public virtual void Execute()
         {
-            console.InExecution = true;
-            console.NameOfExecutingCommand = CommandLabel;
-            console.RecievedCommand += Console_RecievedCommand;
+            Console.Execution.CommandLabel = Label;
+            Console.Execution.State = ExecutionState.RecieveCommands;
+            Console.RecievedCommand += Console_RecievedCommand;
         }
 
         public virtual void Exit()
         {
-            console.InExecution = false;
-            console.NameOfExecutingCommand = null;
-            console.RecievedCommand -= Console_RecievedCommand;
+            Console.Execution.CommandLabel = Label;
+            Console.Execution.State = ExecutionState.ExecuteCommand;
+            Console.RecievedCommand -= Console_RecievedCommand;
         }
 
         public virtual void Console_RecievedCommand(object sender, ConsoleWindow.CommandEventArgs e)
@@ -57,9 +57,9 @@ namespace ExcelsiorConsole
             process.Start();
             //* Read the output (or the error)
             string output = process.StandardOutput.ReadToEnd();
-            Console.WriteLine(output);
+            System.Console.WriteLine(output);
             string err = process.StandardError.ReadToEnd();
-            Console.WriteLine(err);
+            System.Console.WriteLine(err);
             process.WaitForExit();
 
             return output;

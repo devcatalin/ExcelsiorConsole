@@ -25,7 +25,7 @@ namespace ExcelsiorConsole.Users.ioanb7
         public string scrapy = @"C:\Python27\Scripts\scrapy.exe";
         public piratebayCmd(ConsoleWindow c) : base(c)
         {
-            CommandLabel = "piratebay";
+            Label = "piratebay";
 
             jsonResultPath = thisDir + jsonResultPath;
         }
@@ -43,7 +43,7 @@ namespace ExcelsiorConsole.Users.ioanb7
             {
                 foreach (var torrent in torrents)
                 {
-                    console.Write(string.Format("[{0}]: {1}", torrents.IndexOf(torrent), torrent.Title), System.Drawing.Color.AntiqueWhite);
+                    Console.WriteLine(string.Format("[{0}]: {1}", torrents.IndexOf(torrent), torrent.Title), System.Drawing.Color.AntiqueWhite);
                 }
             }
         }
@@ -53,7 +53,7 @@ namespace ExcelsiorConsole.Users.ioanb7
             PopulateTorrents();
             if (torrents == null)
             {
-                console.Write("An error occured", System.Drawing.Color.Red);
+                Console.WriteLine("An error occured", System.Drawing.Color.Red);
             }
             else
             {
@@ -64,7 +64,7 @@ namespace ExcelsiorConsole.Users.ioanb7
         public override void Console_RecievedCommand(object sender, ConsoleWindow.CommandEventArgs e)
         {
             int id = 0;
-            int.TryParse(e.Command, out id);
+            int.TryParse(e.Label, out id);
 
             if (id > -1 && id < torrents.Count)
             {

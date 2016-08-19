@@ -7,7 +7,7 @@ namespace ExcelsiorConsole.Users.Stunt3r
     {
         public StopwatchCmd(ConsoleWindow c) : base(c)
         {
-            CommandLabel = "stopwatch";
+            Label = "stopwatch";
         }
 
         readonly Stopwatch stopwatch = new Stopwatch();
@@ -16,22 +16,22 @@ namespace ExcelsiorConsole.Users.Stunt3r
         {
             base.Execute();
             stopwatch.Start();
-            console.Write("Stopwatch started.", Color.DarkCyan);
+            Console.WriteLine("Stopwatch started.", Color.DarkCyan);
         }
 
         public override void Exit()
         {
             base.Exit();
-            console.Write("Elapsed time: " + stopwatch.Elapsed.ToString(), Color.DarkCyan);
+            Console.WriteLine("Elapsed time: " + stopwatch.Elapsed.ToString(), Color.DarkCyan);
             stopwatch.Reset();
         }
 
         public override void Console_RecievedCommand(object sender, ConsoleWindow.CommandEventArgs e)
         {
-            switch (e.Command)
+            switch (e.Label)
             {
                 case "stop": case "exit": case "end": Exit(); break;
-                default: console.Write("Invalid command. Type 'stop' to end the Stopwatch.", Color.DarkRed); break;
+                default: Console.WriteLine("Invalid command. Type 'stop' to end the Stopwatch.", Color.DarkRed); break;
             }
         }
     }

@@ -4,7 +4,7 @@
     {
         public udkCmd(ConsoleWindow c) : base(c)
         {
-            CommandLabel = "udk";
+            Label = "udk";
         }
 
         public override void Execute()
