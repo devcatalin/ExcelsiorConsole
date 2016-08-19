@@ -8,8 +8,8 @@ namespace ExcelsiorConsole
 {
     public interface ICommand
     {
-        ConsoleWindow console { get; set; }
-        string CommandLabel { get; set; }
+        ConsoleWindow Console { get; set; }
+        string Label { get; set; }
         string[] Args { get; set; }
         void Execute();
     }

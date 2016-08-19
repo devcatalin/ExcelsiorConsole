@@ -12,7 +12,7 @@ namespace ExcelsiorConsole.Global
     {
         public CalculateCmd(ConsoleWindow c) : base(c)
         {
-            CommandLabel = "calculate";
+            Label = "calculate";
             Aliases.Add("calc");
         }
 
@@ -30,26 +30,26 @@ namespace ExcelsiorConsole.Global
 
         public override void Console_RecievedCommand(object sender, ConsoleWindow.CommandEventArgs e)
         {
-            if (e.Command == "exit" || e.Command == "quit" || e.Command == "close")
+            if (e.Label == "exit" || e.Label == "quit" || e.Label == "close")
                 Exit();
             else
             {
                 string expressionString = "";
 
                 if (Args != null)
-                    expressionString = e.Command + string.Join("", Args);
+                    expressionString = e.Label + string.Join("", Args);
                 else
-                    expressionString = e.Command;
+                    expressionString = e.Label;
 
                 Expression expression = new Expression(expressionString);
-                console.Write(expression.calculate().ToString(), Color.DarkCyan);
+                Console.WriteLine(expression.calculate().ToString(), Color.DarkCyan);
             }
         }
 
         private void Calculate(string expressionString)
         {
             Expression expression = new Expression(expressionString);
-            console.Write(expression.calculate().ToString(), Color.DarkCyan);
+            Console.WriteLine(expression.calculate().ToString(), Color.DarkCyan);
         }
     }
 }

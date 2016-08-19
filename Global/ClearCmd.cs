@@ -4,12 +4,12 @@
     {
         public ClearCmd(ConsoleWindow c) : base(c)
         {
-            CommandLabel = "clear";
+            Label = "clear";
         }
 
         public override void Execute()
         {
-            console.ClearConsole();
+            Console.ClearConsole();
         }
     }
 }

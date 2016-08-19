@@ -5,7 +5,7 @@ namespace ExcelsiorConsole.Users.ioanb7
     {
         public calculatorGUICmd(ConsoleWindow c) : base(c)
         {
-            CommandLabel = "calculatorGUI";
+            Label = "calculatorGUI";
             Aliases.Add("calculatorGUIII");
         }
 
