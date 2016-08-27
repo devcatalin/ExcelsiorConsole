@@ -10,6 +10,9 @@ namespace ExcelsiorConsole.Global
 {
     class CalculateCmd : Command
     {
+        private double lastResult = 0;
+        private List<char> operators = new List<char>(new [] { '*', '/', '+', '-' });
+
         public CalculateCmd(Console c) : base(c)
         {
             Label = "calculate";
@@ -34,10 +37,19 @@ namespace ExcelsiorConsole.Global
                 Exit();
             else
             {
-                string expressionString = Args != null ? e.Args[0] : e.Label;
+                string expressionString = Args.Count > 0 ? e.Args[0] : e.Label;
+
+
+                if (operators.Contains(expressionString[0]) && !double.IsNaN(lastResult))
+                {
+                    expressionString = expressionString.Insert(0, lastResult.ToString());
+                }
 
                 Expression expression = new Expression(expressionString);
-                Console.WriteLine(expression.calculate().ToString(), Color.DarkCyan);
+                double result = expression.calculate();
+
+                Console.WriteLine(result.ToString(), Color.DarkCyan);
+                lastResult = result;
             }
         }
 

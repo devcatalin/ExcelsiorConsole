@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ExcelsiorConsole.Global;
+using ExcelsiorConsole.Users.Stunt3r;
 
 namespace ExcelsiorConsole
 {
@@ -56,6 +57,7 @@ namespace ExcelsiorConsole
             console.Commands.Add(new ClearCmd(console));
             console.Commands.Add(new CalculateCmd(console));
             console.Commands.Add(new ComputerCmd(console));
+            console.Commands.Add(new HardwareCmd(console));
             console.Commands.AddRange(CommandsGenerator.GetCommands(console));
         }
 
