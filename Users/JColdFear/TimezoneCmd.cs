@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Globalization;
+using System.Net.Sockets;
 
 namespace ExcelsiorConsole.Users.JColdFear
 {
@@ -32,8 +34,6 @@ namespace ExcelsiorConsole.Users.JColdFear
             PrintTimezones(Args[1]);
         }
 
-        
-
         public override void Console_RecievedCommand(object sender, Console.CommandEventArgs e)
         {
             if (e.Label == "exit" || e.Label == "quit" || e.Label == "close")
@@ -46,13 +46,22 @@ namespace ExcelsiorConsole.Users.JColdFear
 
         public void PrintTimezones(string zone)
         {
-            foreach (var tzi in TimeZoneInfo.GetSystemTimeZones())
-            {
+            List<TimeZoneInfo> timezones = (from timezone in TimeZoneInfo.GetSystemTimeZones()
+                                            where timezone.DisplayName.ToLower().Contains(zone.ToLower())
+                                            select timezone).ToList();
 
-                if (!tzi.DisplayName.ToLower().Contains(zone.ToLower()))
+            if (!timezones.Any())
+            {
+                Console.WriteLine("Couldn't find a timezone that contains '" + zone + "'", Color.Red);
+                return;
+            }
+
+            foreach (var timezone in timezones)
+            {
+                if (!timezone.DisplayName.ToLower().Contains(zone.ToLower()))
                     continue;
 
-                double n = tzi.BaseUtcOffset.TotalHours;
+                double n = timezone.BaseUtcOffset.TotalHours;
                 double hours = Math.Truncate(n);
                 double minutes = (n - hours) * 60;
 
@@ -60,9 +69,9 @@ namespace ExcelsiorConsole.Users.JColdFear
                 time = time.AddHours(hours);
                 time = time.AddMinutes(Math.Abs(minutes));
 
-                Console.WriteLine(tzi.StandardName, System.Drawing.Color.White);
-                Console.WriteLine(tzi.DisplayName, System.Drawing.Color.White);
-                Console.WriteLine(time.ToString(), System.Drawing.Color.White);
+                Console.WriteLine(timezone.StandardName, Color.White);
+                Console.WriteLine(timezone.DisplayName, Color.White);
+                Console.WriteLine(time.ToString(), Color.White);
             }
         }
     }
