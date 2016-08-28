@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ConsoleCore.Interfaces;
 
-namespace ExcelsiorConsole
+namespace ConsoleCore
 {
-    public class InputLine
+    public class InputLine : IInputLine
     {
         public string Text { get; set; }
         public bool IsCommand { get; set; }

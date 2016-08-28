@@ -54,27 +54,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AutoFill.cs" />
     <Compile Include="Bubble\bubble.cs" />
-    <Compile Include="CaretPosition.cs" />
-    <Compile Include="Command.cs" />
-    <Compile Include="ConsoleSettings.cs" />
-    <Compile Include="Execution.cs" />
     <Compile Include="Global\CalculateCmd.cs" />
     <Compile Include="Global\ClearCmd.cs" />
-    <Compile Include="Console.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Global\ComputerCmd.cs" />
-    <Compile Include="InputHistory.cs" />
-    <Compile Include="InputLine.cs" />
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainWindow.Designer.cs">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="ICommand.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Users\JColdFear\TimezoneCmd.cs" />
@@ -120,8 +109,13 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  <ItemGroup />
   <ItemGroup Condition="13 != 37">
     <Compile Include="Users\Stunt3r\StopwatchCmd.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="ConsoleCore\ConsoleCore.csproj">
+      <Project>{fef98403-5ada-4191-858b-8ae245f9c45e}</Project>
+      <Name>ConsoleCore</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

@@ -1,23 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ConsoleCore.Interfaces;
 
-namespace ExcelsiorConsole
+namespace ConsoleCore
 {
-    public class AutoFill
+    public class AutoFill : IAutoFill
     {
         private Console console;
+        public int Index { get; set; }
+        public bool Enabled { get; set; }
+        public List<string> Commands { get; set; } = new List<string>();
 
         public AutoFill(Console c)
         {
             console = c;
         }
-
-        public int Index { get; set; }
-        public bool Enabled { get; set; }
-        public List<string> Commands { get; set; } = new List<string>();
 
         public string GetCommand()
         {

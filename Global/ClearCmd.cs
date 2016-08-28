@@ -1,4 +1,5 @@
-﻿namespace ExcelsiorConsole.Global
+﻿using ConsoleCore;
+namespace ExcelsiorConsole.Global
 {
     class ClearCmd : Command
     {

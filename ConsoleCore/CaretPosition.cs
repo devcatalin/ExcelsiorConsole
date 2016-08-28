@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ConsoleCore.Interfaces;
 
-namespace ExcelsiorConsole
+namespace ConsoleCore
 {
-    public class CaretPosition
+    public class CaretPosition : ICaretPosition
     {
         public int LineStart { get; set; }
         public int CommandStart { get; set; }

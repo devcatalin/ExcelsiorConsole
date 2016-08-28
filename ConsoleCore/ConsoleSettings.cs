@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace ExcelsiorConsole
+namespace ConsoleCore
 {
     public class ConsoleSettings
     {

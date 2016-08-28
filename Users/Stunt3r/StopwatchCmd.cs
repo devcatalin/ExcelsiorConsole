@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Drawing;
+using ConsoleCore;
 
 namespace ExcelsiorConsole.Users.Stunt3r
 {
@@ -26,7 +27,7 @@ namespace ExcelsiorConsole.Users.Stunt3r
             stopwatch.Reset();
         }
 
-        public override void Console_RecievedCommand(object sender, Console.CommandEventArgs e)
+        public override void Console_RecievedCommand(object sender, CommandEventArgs e)
         {
             switch (e.Label)
             {

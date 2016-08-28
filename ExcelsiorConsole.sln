@@ -5,6 +5,8 @@ VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelsiorConsole", "ExcelsiorConsole.csproj", "{D62CE2BD-C83C-4499-8B02-FC844E4C8946}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleCore", "ConsoleCore\ConsoleCore.csproj", "{FEF98403-5ADA-4191-858B-8AE245F9C45E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{D62CE2BD-C83C-4499-8B02-FC844E4C8946}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D62CE2BD-C83C-4499-8B02-FC844E4C8946}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D62CE2BD-C83C-4499-8B02-FC844E4C8946}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FEF98403-5ADA-4191-858B-8AE245F9C45E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FEF98403-5ADA-4191-858B-8AE245F9C45E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FEF98403-5ADA-4191-858B-8AE245F9C45E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FEF98403-5ADA-4191-858B-8AE245F9C45E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

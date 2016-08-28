@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using ConsoleCore;
 namespace ExcelsiorConsole
 {
 public static class CommandsGenerator

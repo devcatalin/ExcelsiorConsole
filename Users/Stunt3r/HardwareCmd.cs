@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using WMI_Hardware;
 using WMI_Hardware.Hardware;
+using ConsoleCore;
+using Console = ConsoleCore.Console;
 
 namespace ExcelsiorConsole.Users.Stunt3r
 {

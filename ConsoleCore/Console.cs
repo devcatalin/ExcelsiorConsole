@@ -3,26 +3,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.Drawing;
+using System.Windows.Forms;
+using ConsoleCore.Interfaces;
 
-namespace ExcelsiorConsole
+namespace ConsoleCore
 {
-    public class Console : RichTextBox
+    public class Console : RichTextBox, IConsole
     {
         public new string Name { get { return "excelsior"; } }
 
         public Color Color { get; set; }
 
-        public CaretPosition CaretPosition { get; set; }
+        public ICaretPosition CaretPosition { get; set; }
 
-        public Execution Execution { get; set; }
+        public IExecution Execution { get; set; }
 
-        public List<Command> Commands = new List<Command>();
+        public List<ICommand> Commands { get; set; }
 
-        public InputHistory InputHistory { get; set; } = new InputHistory();
+        public IInputHistory InputHistory { get; set; }
 
-        public AutoFill AutoFill { get; set; }
+        public IAutoFill AutoFill { get; set; }
 
         public event EventHandler<CommandEventArgs> RecievedCommand;
 
@@ -30,13 +31,17 @@ namespace ExcelsiorConsole
         {
             if (settings == null) settings = new ConsoleSettings();
 
-            Execution = new Execution();
-
             Color = settings.ConsoleColor;
 
-            AutoFill = new AutoFill(this);
-
             CaretPosition = new CaretPosition(this);
+
+            Execution = new Execution();
+
+            Commands = new List<ICommand>();
+
+            InputHistory = new InputHistory();
+
+            AutoFill = new AutoFill(this);
 
             Font = settings.Font;
             BackColor = settings.BackColor;
@@ -145,7 +150,7 @@ namespace ExcelsiorConsole
             SelectedText = string.Empty;
         }
 
-        private string GetInputText()
+        public string GetInputText()
         {
             SelectInputLine();
             return SelectedText;
@@ -191,6 +196,39 @@ namespace ExcelsiorConsole
             return base.ProcessCmdKey(ref msg, keyData);
         }
 
+        public void HandleInput(IInputLine inputLine)
+        {
+            if (Execution.State == ExecutionState.RecieveCommands)
+            {
+                CommandEventArgs eventArgs = new CommandEventArgs();
+                eventArgs.Label = inputLine.CommandLabel;
+                eventArgs.Args = inputLine.CommandArgs;
+                RecievedCommand(this, eventArgs);
+            }
+            else
+            {
+                ICommand command = Commands.FirstOrDefault(c => c.Label.ToLower() == inputLine.CommandLabel.ToLower() ||
+                                                               c.Aliases.Any(alias => alias.ToLower() == inputLine.CommandLabel.ToLower()));
+                if (command != null)
+                {
+                    command.Args = inputLine.CommandArgs;
+                    if (command.CanExecute())
+                        command.Execute();
+                    inputLine.IsCommand = true;
+                }
+                else
+                {
+                    WriteLine("Command not found.", Color.DarkRed);
+                    inputLine.IsCommand = false;
+                }
+            }
+
+            InputHistory.Lines.Add(inputLine);
+            InputHistory.Index = InputHistory.Lines.Count;
+            AutoFill.Enabled = false;
+            NewLine();
+        }
+
         protected override void OnKeyDown(KeyEventArgs e)
         {
             if (e.Control && e.KeyValue == 'A')
@@ -203,7 +241,6 @@ namespace ExcelsiorConsole
             {
                 case Keys.Enter:
                     {
-
                         if (Text.Length <= CaretPosition.CommandStart)
                         {
                             NewLine();
@@ -211,7 +248,7 @@ namespace ExcelsiorConsole
                             break;
                         }
 
-                        InputLine inputLine = new InputLine(GetInputText());
+                        IInputLine inputLine = new InputLine(GetInputText());
                         DeselectAll();
 
                         if (string.IsNullOrWhiteSpace(inputLine.CommandLabel))
@@ -221,35 +258,7 @@ namespace ExcelsiorConsole
                             break;
                         }
 
-                        if (Execution.State == ExecutionState.RecieveCommands)
-                        {
-                            CommandEventArgs eventArgs = new CommandEventArgs();
-                            eventArgs.Label = inputLine.CommandLabel;
-                            eventArgs.Args = inputLine.CommandArgs;
-                            RecievedCommand(this, eventArgs);
-                        }
-                        else
-                        {
-                            Command command = Commands.FirstOrDefault(c => c.Label.ToLower() == inputLine.CommandLabel.ToLower() || 
-                                                                           c.Aliases.Any(alias => alias.ToLower() == inputLine.CommandLabel.ToLower()));
-                            if (command != null)
-                            {
-                                command.Args = inputLine.CommandArgs;
-                                if (command.CanExecute())
-                                    command.Execute();
-                                inputLine.IsCommand = true;
-                            }
-                            else
-                            {
-                                WriteLine("Command not found.", Color.DarkRed);
-                                inputLine.IsCommand = false;
-                            }
-                        }
-
-                        InputHistory.Lines.Add(inputLine);
-                        InputHistory.Index = InputHistory.Lines.Count;
-                        AutoFill.Enabled = false;
-                        NewLine();
+                        HandleInput(inputLine);
 
                         e.Handled = true;
                         break;
@@ -333,12 +342,6 @@ namespace ExcelsiorConsole
                     AutoFill.Reset();
                     break;
             }
-        }
-
-        public class CommandEventArgs : EventArgs
-        {
-            public string Label { get; set; }
-            public List<string> Args { get; set; }
         }
     }
 }

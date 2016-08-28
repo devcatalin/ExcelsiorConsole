@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using ConsoleCore;
+using Console = ConsoleCore.Console;
 
 namespace ExcelsiorConsole.Users.JColdFear
 {
@@ -30,7 +32,7 @@ namespace ExcelsiorConsole.Users.JColdFear
             PrintTimezones(Args[1]);
         }
 
-        public override void Console_RecievedCommand(object sender, Console.CommandEventArgs e)
+        public override void Console_RecievedCommand(object sender, CommandEventArgs e)
         {
             if (e.Label == "exit" || e.Label == "quit" || e.Label == "close")
                 Exit();
