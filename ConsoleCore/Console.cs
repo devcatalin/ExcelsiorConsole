@@ -118,6 +118,11 @@ namespace ConsoleCore
             return "error";
         }
 
+        public void WriteLine(string message)
+        {
+            AppendText(Environment.NewLine + GetIndentation() + message, Color.DarkCyan);
+        }
+
         public void WriteLine(string message, Color color)
         {
             AppendText(Environment.NewLine + GetIndentation() + message, color);

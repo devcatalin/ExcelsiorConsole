@@ -28,7 +28,10 @@ namespace ConsoleCore.Interfaces
         bool Focus();
         string GetInputText();
         void ClearConsole();
-        void WriteLine(string line, System.Drawing.Color color);
+        void AppendText(string text);
+        void AppendText(string text, System.Drawing.Color color);
+        void WriteLine(string message);
+        void WriteLine(string message, System.Drawing.Color color);
         void NewLine();
         void HandleInput(IInputLine inputLine);
     }
