@@ -4,7 +4,7 @@ using ExcelsiorConsole.Global;
 using ExcelsiorConsole.Users.Stunt3r;
 using ExcelsiorConsole.Users.JColdFear;
 using ConsoleCore;
-using Console = ConsoleCore.Console;
+using ConsoleCore.Interfaces;
 
 namespace ExcelsiorConsole
 {
@@ -15,47 +15,47 @@ namespace ExcelsiorConsole
         [System.Runtime.InteropServices.DllImport("user32.dll")]
         private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
 
-        Console console = null;
+        private IConsole Console { get; }
 
-        public MainWindow(Console console = null)
+        public MainWindow(IConsole console = null)
         {
-            if (console == null) console = new Console();
-            this.console = console;
-
             InitializeComponent();
 
-            const int VK_Z = 0x6A;
-            const int MOD_ALT = 0x0001;
-            RegisterHotKey(this.Handle, this.GetType().GetHashCode(), MOD_ALT, VK_Z);
+            if (console == null) console = new ConsoleCore.Console();
+            Console = console;
+
+            const int num0Key = 0x6A;
+            const int modAlt = 0x0001;
+            RegisterHotKey(Handle, GetType().GetHashCode(), modAlt, num0Key);
         }
 
         protected override void WndProc(ref Message m)
         {
             if (m.Msg == 0x0312)
             {
-                this.WindowState = FormWindowState.Minimized;
-                this.Show();
-                this.WindowState = FormWindowState.Normal;
-                console.Focus();
+                WindowState = FormWindowState.Minimized;
+                Show();
+                WindowState = FormWindowState.Normal;
+                Console.Focus();
             }
             base.WndProc(ref m);
         }
 
         private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
-            UnregisterHotKey(this.Handle, this.GetType().GetHashCode());
+            UnregisterHotKey(Handle, GetType().GetHashCode());
         }
 
         private void MainWindow_Load(object sender, EventArgs e)
         {
-            console.Dock = DockStyle.Fill;
-            this.Controls.Add(console);
-            console.Commands.Add(new ClearCmd(console));
-            console.Commands.Add(new CalculateCmd(console));
-            console.Commands.Add(new ComputerCmd(console));
-            console.Commands.Add(new HardwareCmd(console));
-            console.Commands.Add(new TimezoneCmd(console));
-            console.Commands.AddRange(CommandsGenerator.GetCommands(console));
+            Console.Dock = DockStyle.Fill;
+            Controls.Add((Control)Console);
+            Console.Commands.Add(new ClearCmd(Console));
+            Console.Commands.Add(new CalculateCmd(Console));
+            Console.Commands.Add(new ComputerCmd(Console));
+            Console.Commands.Add(new HardwareCmd(Console));
+            Console.Commands.Add(new TimezoneCmd(Console));
+            Console.Commands.AddRange(CommandsGenerator.GetCommands(Console));
         }
 
     }

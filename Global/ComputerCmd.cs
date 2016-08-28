@@ -1,10 +1,11 @@
 ﻿using ConsoleCore;
+using ConsoleCore.Interfaces;
 
 namespace ExcelsiorConsole.Global
 {
     class ComputerCmd : Command
     {
-        public ComputerCmd(Console c) : base(c)
+        public ComputerCmd(IConsole c) : base(c)
         {
             Label = "computer";
             Aliases.Add("comp");

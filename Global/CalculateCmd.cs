@@ -2,6 +2,8 @@
 using System.Drawing;
 using org.mariuszgromada.math.mxparser;
 using ConsoleCore;
+using ConsoleCore.Interfaces;
+
 namespace ExcelsiorConsole.Global
 {
     class CalculateCmd : Command
@@ -9,7 +11,7 @@ namespace ExcelsiorConsole.Global
         private double lastResult = 0;
         private List<char> operators = new List<char>(new [] { '*', '/', '+', '-' });
 
-        public CalculateCmd(Console c) : base(c)
+        public CalculateCmd(IConsole c) : base(c)
         {
             Label = "calculate";
             Aliases.Add("calc");
@@ -27,7 +29,7 @@ namespace ExcelsiorConsole.Global
             Calculate(expressionString);
         }
 
-        public override void Console_RecievedCommand(object sender, CommandEventArgs e)
+        public override void RecievedCommand(object sender, CommandEventArgs e)
         {
             if (e.Label == "exit" || e.Label == "quit" || e.Label == "close")
                 Exit();

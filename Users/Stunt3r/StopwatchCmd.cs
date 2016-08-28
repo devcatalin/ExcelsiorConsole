@@ -1,33 +1,34 @@
 ﻿using System.Diagnostics;
 using System.Drawing;
 using ConsoleCore;
+using ConsoleCore.Interfaces;
 
 namespace ExcelsiorConsole.Users.Stunt3r
 {
     class StopwatchCmd : Command
     {
-        public StopwatchCmd(Console c) : base(c)
+        public StopwatchCmd(IConsole c) : base(c)
         {
             Label = "stopwatch";
         }
 
-        readonly Stopwatch stopwatch = new Stopwatch();
+        readonly Stopwatch _stopwatch = new Stopwatch();
 
         public override void Execute()
         {
             base.Execute();
-            stopwatch.Start();
+            _stopwatch.Start();
             Console.WriteLine("Stopwatch started.", Color.DarkCyan);
         }
 
         public override void Exit()
         {
             base.Exit();
-            Console.WriteLine("Elapsed time: " + stopwatch.Elapsed.ToString(), Color.DarkCyan);
-            stopwatch.Reset();
+            Console.WriteLine("Elapsed time: " + _stopwatch.Elapsed.ToString(), Color.DarkCyan);
+            _stopwatch.Reset();
         }
 
-        public override void Console_RecievedCommand(object sender, CommandEventArgs e)
+        public override void RecievedCommand(object sender, CommandEventArgs e)
         {
             switch (e.Label)
             {

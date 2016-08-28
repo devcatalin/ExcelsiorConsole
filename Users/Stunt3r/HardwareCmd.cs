@@ -11,13 +11,13 @@ using System.Windows.Forms;
 using WMI_Hardware;
 using WMI_Hardware.Hardware;
 using ConsoleCore;
-using Console = ConsoleCore.Console;
+using ConsoleCore.Interfaces;
 
 namespace ExcelsiorConsole.Users.Stunt3r
 {
     class HardwareCmd : Command
     {
-        public HardwareCmd(Console c) : base(c)
+        public HardwareCmd(IConsole c) : base(c)
         {
             Label = "hardware";
         }
@@ -40,7 +40,7 @@ namespace ExcelsiorConsole.Users.Stunt3r
 
         public override void Execute()
         {
-            string path = System.Environment.CurrentDirectory + @"\hardwareSettings.xml";
+            string path = System.Environment.CurrentDirectory + @"\hardwareSettings.xml"; // this is a dependency.
             Connection wmiConnection = new Connection(path);
             
 

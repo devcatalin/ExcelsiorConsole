@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using ConsoleCore;
-using Console = ConsoleCore.Console;
+using ConsoleCore.Interfaces;
 
 namespace ExcelsiorConsole.Users.JColdFear
 {
     class TimezoneCmd : Command
     {
-        public TimezoneCmd(Console c) : base (c)
+        public TimezoneCmd(IConsole c) : base (c)
         {
             Label = "timezone";
             Aliases.Add("tz");
@@ -32,7 +32,7 @@ namespace ExcelsiorConsole.Users.JColdFear
             PrintTimezones(Args[1]);
         }
 
-        public override void Console_RecievedCommand(object sender, CommandEventArgs e)
+        public override void RecievedCommand(object sender, CommandEventArgs e)
         {
             if (e.Label == "exit" || e.Label == "quit" || e.Label == "close")
                 Exit();

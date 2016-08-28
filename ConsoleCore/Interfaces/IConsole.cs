@@ -19,11 +19,17 @@ namespace ConsoleCore.Interfaces
 
         event EventHandler<CommandEventArgs> RecievedCommand;
 
-        void ClearConsole();
-        //void WriteLine(string line);
-        void NewLine();
-        string GetInputText();
-        void HandleInput(IInputLine inputLine);
+        int TextLength { get; }
+        int SelectionStart { get; set; }
+        int SelectionLength { get; set; }
+        System.Drawing.Font SelectionFont { get; set; }
+        System.Windows.Forms.DockStyle Dock { get; set; }
 
+        bool Focus();
+        string GetInputText();
+        void ClearConsole();
+        void WriteLine(string line, System.Drawing.Color color);
+        void NewLine();
+        void HandleInput(IInputLine inputLine);
     }
 }

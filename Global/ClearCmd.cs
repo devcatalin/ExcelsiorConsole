@@ -1,9 +1,11 @@
 ﻿using ConsoleCore;
+using ConsoleCore.Interfaces;
+
 namespace ExcelsiorConsole.Global
 {
     class ClearCmd : Command
     {
-        public ClearCmd(Console c) : base(c)
+        public ClearCmd(IConsole c) : base(c)
         {
             Label = "clear";
         }
